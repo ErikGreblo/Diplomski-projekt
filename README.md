@@ -1,5 +1,5 @@
-# Diplomski-projekt
-Razvoj razgovornog agenta za učenje Fizike
+## Diplomski-projekt
+# Razvoj razgovornog agenta za učenje Fizike
 
 # Mentori:
 Izv. prof. dr. sc. Mirko Randić (mirko.randic@fer.unizg.hr)

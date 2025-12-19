@@ -10,9 +10,16 @@ Zadatak je razvoj web aplikacije koja implementira razgovornog agenta za pomoć 
 
 # Studenti
 Šimun Banović	simun.banovic@fer.unizg.hr	
+
 Juraj Čižić	juraj.cizic@fer.unizg.hr	
+
 Andrea Gazibarić	andrea.gazibaric@fer.unizg.hr	
+
 Erik Greblo	erik.greblo@fer.unizg.hr	
+
 Siniša Horvatić	sinisa.horvatic@fer.unizg.hr	
+
 Filip Vuletić-Antić	filip.vuletic-antic@fer.unizg.hr	
+
 Sven Winkler	sven.winkler@fer.unizg.hr
+

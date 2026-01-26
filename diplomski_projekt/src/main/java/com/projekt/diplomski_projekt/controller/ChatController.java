@@ -1,6 +1,7 @@
 package com.projekt.diplomski_projekt.controller;
 
 import com.projekt.diplomski_projekt.model.FileService;
+import com.projekt.diplomski_projekt.service.ChatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -21,15 +22,23 @@ public class ChatController {
 
     private final RestTemplate restTemplate = new RestTemplate();
 
+    private final Map<String, ChatService> chatServices;
+
     @Autowired
     private FileService fileService;
 
     @Value("${file.upload-dir}")
     private String uploadDir;
 
-    @PostMapping("")
-    public Map<String, String> chat(@RequestBody Map<String, String> request) {
+    public ChatController(Map<String, ChatService> chatServices) {
+        this.chatServices = chatServices;
+    }
 
+    @PostMapping("")
+    public Map<String, String> chat(
+            @RequestBody Map<String, String> request,
+            @RequestParam(defaultValue = "ollama") String provider
+    ) {
         String systemPrompt = """
                             You are a helpful assistant.
                             Use Markdown for structure.
@@ -37,32 +46,16 @@ public class ChatController {
                             Respond in Croatian.
                             """;
 
-        String prompt = request.get("message");
 
-        String uploadsContext = fileService.readAllUploads();
+        String userPrompt = request.get("message");
+        String context = fileService.readAllUploads();
 
-        String fullPrompt = systemPrompt
-                + "\n\nContext from uploaded files:\n" + uploadsContext
-                + "\n\nUser: " + prompt;
+        ChatService service = chatServices.get(provider);
+        if (service == null) {
+            throw new IllegalArgumentException("Unknown provider: " + provider);
+        }
 
-
-        //System.out.println("=== Prompt sent to LLM ===");
-        //System.out.println(fullPrompt);
-        //System.out.println("==========================");
-
-        Map<String, Object> ollamaRequest = Map.of(
-                "model", "qwen3:0.6b",
-                "prompt", fullPrompt,
-                "stream", false
-        );
-
-        ResponseEntity<Map> response = restTemplate.postForEntity(
-                "http://localhost:11434/api/generate",
-                ollamaRequest,
-                Map.class
-        );
-
-        String reply = response.getBody().get("response").toString();
+        String reply = service.chat(systemPrompt, userPrompt, context);
 
         return Map.of("reply", reply);
     }

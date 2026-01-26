@@ -4,6 +4,7 @@ import AppBar from './components/Appbar';
 import Student from './components/Student';
 import MessageList from './components/MessageList';
 import MessageInput from './components/MessageInput';
+import ModelDropdown from './components/ModelDropdown';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
@@ -16,6 +17,8 @@ import axios from "axios";
 export default function App() {
   const [messages, setMessages] = useState([]);
 	const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedModel, setSelectedModel] = useState("ollama");
+
 	const onFileChange = (event) => {
 		setSelectedFile(event.target.files[0]);
 	};
@@ -29,8 +32,7 @@ export default function App() {
 
     setMessages(prev => [...prev, userMessage]);
 
-    // fake backend call
-    const response = await fetch("http://localhost:8080/chat", {
+    const response = await fetch(`http://localhost:8080/chat?provider=${selectedModel}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ message: text })
@@ -85,10 +87,11 @@ const onFileUpload = async () => {
         <Box sx={{ paddingTop: '5px' }}>
         <input type="file" onChange={onFileChange} />
         <Button onClick={onFileUpload} variant="contained"> Upload learning material </Button>
-
+        <ModelDropdown
+        value={selectedModel}
+        onChange={setSelectedModel}
+        />
         </Box>
-
-
       </Paper>
     </Container>
     </div>

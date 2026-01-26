@@ -23,7 +23,6 @@ export default function Appbar() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             FizikaLLM
           </Typography>
-          <Button color="inherit">Login</Button>
         </Toolbar>
       </AppBar>
     </Box>

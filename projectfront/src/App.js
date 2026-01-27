@@ -1,99 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
-import AppBar from './components/Appbar';
-import Student from './components/Student';
-import MessageList from './components/MessageList';
-import MessageInput from './components/MessageInput';
-import ModelDropdown from './components/ModelDropdown';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Container from '@mui/material/Container';
-import Paper from '@mui/material/Paper';
-import TextField from '@mui/material/TextField';
+import Home from './components/Home';
+import Datoteke from './components/Datoteke';
 import React, {useEffect, useState} from 'react'
 import axios from "axios";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Navigate,
+} from "react-router-dom";
 
-
-export default function App() {
-  const [messages, setMessages] = useState([]);
-	const [selectedFile, setSelectedFile] = useState(null);
-  const [selectedModel, setSelectedModel] = useState("ollama");
-
-	const onFileChange = (event) => {
-		setSelectedFile(event.target.files[0]);
-	};
-
-  const sendMessage = async (text) => {
-    const userMessage = {
-      id: Date.now(),
-      sender: 'user',
-      text
-    };
-
-    setMessages(prev => [...prev, userMessage]);
-
-    const response = await fetch(`http://localhost:8080/chat?provider=${selectedModel}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message: text })
-    });
-
-    const data = await response.json();
-
-    const assistantMessage = {
-      id: Date.now() + 1,
-      sender: 'assistant',
-      text: data.reply
-    };
-
-    setMessages(prev => [...prev, assistantMessage]);
-  };
-
-
-  const handleUpload = async () => {
-      // We will fill this out later
-    };
-
-const onFileUpload = async () => {
-  if (!selectedFile) return;
-
-  const MAX_SIZE = 10 * 1024 * 1024; // 10MB
-  if (selectedFile.size > MAX_SIZE) {
-    alert("File is too large! Maximum allowed size is 10MB.");
-    return;
-  }
-
-  const formData = new FormData();
-  formData.append("file", selectedFile);
-
-  const response = await fetch("http://localhost:8080/chat/upload", {
-    method: "POST",
-    body: formData
-  });
-
-  const data = await response.json();
-  console.log(data);
-};
-
+function App() {
+  const router = createBrowserRouter([
+    {
+      path: "*",
+      element: <Navigate to="/home" />,
+    },
+    {
+      path: "/home",
+      element: <Home />
+    },
+    {
+      path: "/pregled-datoteka",
+      element: <Datoteke />
+    },
+  ]);
 
   return (
-    
-    <div className="App">
-    <AppBar/>
-    <Container className={"all"} maxWidth="lg" sx={{ paddingTop: '32px' }}>
-      <Paper className={"chat-box"} sx={{ height: '80vh', display: 'flex', flexDirection: 'column', p: 1 }}>
-        <MessageList messages={messages} />
-        <MessageInput onSend={sendMessage} />
-        <Box className={"box-under"} sx={{ paddingTop: '5px' }}>
-          <input className={"btn-file"} type="file" onChange={onFileChange} />
-          <Button className={"btn-upload"} onClick={onFileUpload} variant="contained"> Upload learning material </Button>
-          <ModelDropdown
-          value={selectedModel}
-          onChange={setSelectedModel}
-          />
-        </Box>
-      </Paper>
-    </Container>
-    </div>
+    <React.StrictMode>
+      <RouterProvider router={router} />
+    </React.StrictMode>
   );
 }
+
+export default App;

@@ -10,7 +10,7 @@ export default function MessageList({ messages }) {
   }, [messages]);
 
   return (
-    <Box className={"box-text"} sx={{ flexGrow: 1, overflowY: 'auto', mb: 2, maxHeight: '70vh' }}>
+    <Box className={"box-text"}>
       {messages.map((msg) => (
         <ChatMessage key={msg.id} message={msg} />
       ))}

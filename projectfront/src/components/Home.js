@@ -13,8 +13,7 @@ import TextField from '@mui/material/TextField';
 import React, {useEffect, useState} from 'react'
 import axios from "axios";
 
-export default function Home() {
-  const [messages, setMessages] = useState([]);
+export default function Home({ messages, setMessages }) {
 	const [selectedFile, setSelectedFile] = useState(null);
   const [selectedModel, setSelectedModel] = useState("ollama");
 
@@ -75,7 +74,6 @@ const onFileUpload = async () => {
 };
 
   return (
-    
     <div className="App">
     <AppBar/>
     <Container className={"all"} maxWidth="lg">
@@ -84,7 +82,9 @@ const onFileUpload = async () => {
         <MessageInput onSend={sendMessage} />
         <Box className={"box-under"}>
           <input className={"btn-file"} type="file" onChange={onFileChange} />
-          <Button className={"btn-upload"} onClick={onFileUpload} variant="contained"> Upload learning material </Button>
+          <div className='btn-upload-container'>
+            <Button className={"btn-upload"} onClick={onFileUpload} variant="contained"> Upload learning material </Button>
+          </div>
           <ModelDropdown
           value={selectedModel}
           onChange={setSelectedModel}

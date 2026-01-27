@@ -9,14 +9,16 @@ import {
 } from "react-router-dom";
 
 function App() {
+  const [messages, setMessages] = useState([]);
+
   const router = createBrowserRouter([
     {
       path: "*",
-      element: <Navigate to="/home" />,
+      element: <Navigate to="/home" replace />,
     },
     {
       path: "/home",
-      element: <Home />
+      element: <Home messages={messages} setMessages={setMessages}/>
     },
     {
       path: "/pregled-datoteka",

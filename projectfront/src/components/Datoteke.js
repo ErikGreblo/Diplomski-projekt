@@ -1,8 +1,11 @@
 import './App.css';
+import AppBar from './Appbar';
 
 const Datoteke = () => {
   return (
-    <div>DAJSJIKDNSAJHIFBNSAJHIFBN</div>
+    <div className="App-datoteke">
+    <AppBar/>
+    </div>
   );
 }
 

@@ -11,7 +11,7 @@ export default function MessageInput({ onSend }) {
   };
 
   return (
-    <Box display="flex" gap={1}>
+    <Box className={"box-msg"} display="flex" gap={1}>
       <TextField
         fullWidth
         placeholder="Ask something..."
@@ -19,7 +19,7 @@ export default function MessageInput({ onSend }) {
         onChange={(e) => setText(e.target.value)}
         onKeyDown={(e) => e.key === 'Enter' && handleSend()}
       />
-      <Button variant="contained" onClick={handleSend}>
+      <Button className={"btn-send"} variant="contained" onClick={handleSend}>
         Send
       </Button>
     </Box>

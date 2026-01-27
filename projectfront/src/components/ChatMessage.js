@@ -9,11 +9,13 @@ export default function ChatMessage({ message }) {
 
   return (
     <Box
+        className={"chat-all"}
       display="flex"
       justifyContent={isUser ? 'flex-end' : 'flex-start'}
       mb={1}
     >
       <Paper
+          className={"msg-box"}
         sx={{
           p: 1.5,
           maxWidth: '70%',

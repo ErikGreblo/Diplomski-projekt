@@ -80,17 +80,17 @@ const onFileUpload = async () => {
     
     <div className="App">
     <AppBar/>
-    <Container maxWidth="lg" sx={{ paddingTop: '32px' }}>
-      <Paper sx={{ height: '80vh', display: 'flex', flexDirection: 'column', p: 1 }}>
+    <Container className={"all"} maxWidth="lg" sx={{ paddingTop: '32px' }}>
+      <Paper className={"chat-box"} sx={{ height: '80vh', display: 'flex', flexDirection: 'column', p: 1 }}>
         <MessageList messages={messages} />
         <MessageInput onSend={sendMessage} />
-        <Box sx={{ paddingTop: '5px' }}>
-        <input type="file" onChange={onFileChange} />
-        <Button onClick={onFileUpload} variant="contained"> Upload learning material </Button>
-        <ModelDropdown
-        value={selectedModel}
-        onChange={setSelectedModel}
-        />
+        <Box className={"box-under"} sx={{ paddingTop: '5px' }}>
+          <input className={"btn-file"} type="file" onChange={onFileChange} />
+          <Button className={"btn-upload"} onClick={onFileUpload} variant="contained"> Upload learning material </Button>
+          <ModelDropdown
+          value={selectedModel}
+          onChange={setSelectedModel}
+          />
         </Box>
       </Paper>
     </Container>

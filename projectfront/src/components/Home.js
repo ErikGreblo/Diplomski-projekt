@@ -12,6 +12,7 @@ import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import React, {useEffect, useState} from 'react'
 import axios from "axios";
+import 'katex/dist/katex.min.css';
 
 export default function Home({ messages, setMessages }) {
 	const [selectedFile, setSelectedFile] = useState(null);

@@ -2,7 +2,7 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import { Menu, MenuItem } from '@mui/material';
+import { Backdrop, Menu, MenuItem } from '@mui/material';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -28,10 +28,11 @@ const Appbar = () => {
   };
 
   return (
-    <Box className={"header"} sx={{ flexGrow: 1 }}>
+    <Box className={"header"}>
       <AppBar position="static">
-        <Toolbar>
+        <Toolbar className='header-toolbar'>
           <IconButton
+            className='icon'
             size="large"
             edge="start"
             color="inherit"
@@ -57,7 +58,13 @@ const Appbar = () => {
             <MenuItem onClick={handleNavigate}>Pregled datoteka</MenuItem>
             <MenuItem onClick={handleClose}>Moja opcija 2</MenuItem>
           </Menu>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <Typography variant="h6" component="div" sx={{
+              position: 'absolute',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              pointerEvents: 'none',
+              fontWeight: 'bold',
+            }}>
             FizikaLLM
           </Typography>
         </Toolbar>

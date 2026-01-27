@@ -14,7 +14,7 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: royalblue;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -25,7 +25,7 @@
 }
 
 .App-link {
-  color: #61dafb;
+  color: royalblue;
 }
 
 @keyframes App-logo-spin {
@@ -37,7 +37,117 @@
   }
 }
 
+.all{
+  padding-top: 32px;
+}
+
+.header{
+  flex-grow: 1;
+  text-align: center;
+}
+
+.header-toolbar{
+  background-color: royalblue;
+}
+
+.icon{
+  position: absolute;
+}
+
+.chat-box{
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0 1vw 1vh 1vw;
+}
+
+.markdown-container {
+  line-height: 1.5;
+  font-size: 0.95rem;
+}
+
+.markdown-container p:first-child { margin-top: 0.5vh; }
+.markdown-container p:last-child { margin-bottom: 0.5vh}
+
+.markdown-container code {
+  background-color: rgba(0, 0, 0, 0.1);
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.katex-display {
+  margin: 0.5rem 0 !important;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.msg-box{
+  height: fit-content;
+  padding: 0vh 0.5vw 0vh 0.5vw;
+  text-align: center;
+}
+
+.App .btn-send {
+  background: royalblue;
+}
+
 .box-under{
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 5px;
+}
+
+.btn-file::file-selector-button{
+  border-radius: 6px;
+  padding: 0.5vh 0.5vw 0.5vh 0.5vw;
+  background: royalblue;
+  color: white;
+  cursor: pointer;
+}
+
+.btn-file{
+  width: 20%;
+}
+
+.btn-file::file-selector-button{
+  border: none;
+  outline: none;
+  box-shadow: none;
+  padding: 1vh 1vw 1vh 1vw;
+}
+
+.btn-file::file-selector-button:hover {
+  background-color: #1976d2;
+}
+
+.btn-upload-container{
+  flex-grow: 1;
+}
+
+.App .btn-upload{
+  border-radius: 6px;
+  padding: 0.5vh 0.5vw 0.5vh 0.5vw;
+  background: royalblue;
+  color: white;
+  cursor: pointer;
+}
+
+.App .btn-upload:hover{
+  background-color: #1976d2;
+}
+
+.dropdown-model{
+  z-index: 1000;
+  display: block;
+  cursor: pointer;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  border-radius: 4px;
+  padding: 0.5vh 0.5vw 0.5vh 0.5vw;
+  user-select: none;
+  width: 20%;
 }

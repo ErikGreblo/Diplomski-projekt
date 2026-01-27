@@ -17,19 +17,20 @@ export default function ChatMessage({ message }) {
       <Paper
           className={"msg-box"}
         sx={{
-          p: 1.5,
           maxWidth: '70%',
           bgcolor: isUser ? 'primary.main' : 'grey.300',
           color: isUser ? 'white' : 'black',
-          overflowWrap: 'break-word' // ensure long equations wrap
+          overflowWrap: 'break-word'
         }}
       >
+      <Box className="markdown-container">
         <ReactMarkdown
           remarkPlugins={[remarkMath]}
           rehypePlugins={[rehypeKatex]}
         >
           {message.text}
         </ReactMarkdown>
+      </Box>
       </Paper>
     </Box>
   );

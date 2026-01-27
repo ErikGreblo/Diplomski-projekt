@@ -67,8 +67,8 @@
   font-size: 0.95rem;
 }
 
-.markdown-container p:first-child { margin-top: 0.5vh; }
-.markdown-container p:last-child { margin-bottom: 0.5vh}
+.markdown-container p:first-child { margin-top: 0.5vh;}
+.markdown-container p:last-child { margin-bottom: 0.5vh;}
 
 .markdown-container code {
   background-color: rgba(0, 0, 0, 0.1);
@@ -87,6 +87,24 @@
   height: fit-content;
   padding: 0vh 0.5vw 0vh 0.5vw;
   text-align: center;
+  background-color: royalblue !important;
+}
+
+.box-text{
+  overflow-y: auto;
+  padding: 1vh 1vw 0vh 0vw;
+  background-clip: padding-box;
+}
+
+.box-text::-webkit-scrollbar {
+  width: 0.5vw;
+}
+
+.box-text::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: content-box;
 }
 
 .App .btn-send {

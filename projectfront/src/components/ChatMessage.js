@@ -18,7 +18,7 @@ export default function ChatMessage({ message }) {
           className={"msg-box"}
         sx={{
           maxWidth: '70%',
-          bgcolor: isUser ? 'primary.main' : 'grey.300',
+          bgcolor: isUser ? 'royalblue' : 'grey.300',
           color: isUser ? 'white' : 'black',
           overflowWrap: 'break-word'
         }}

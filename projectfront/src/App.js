@@ -9,7 +9,9 @@ import {
 } from "react-router-dom";
 
 function App() {
-  const [messages, setMessages] = useState([]);
+  const [messagesO, setMessagesO] = useState([]);
+  const [messagesC, setMessagesC] = useState([]);
+  const [selectedModel, setSelectedModel] = useState("ollama");
 
   const router = createBrowserRouter([
     {
@@ -18,7 +20,7 @@ function App() {
     },
     {
       path: "/home",
-      element: <Home messages={messages} setMessages={setMessages}/>
+      element: <Home messagesO={messagesO} messagesC = {messagesC} setMessagesO={setMessagesO} setMessagesC={setMessagesC} selectedModel = {selectedModel} setSelectedModel = {setSelectedModel}/>
     },
     {
       path: "/pregled-datoteka",

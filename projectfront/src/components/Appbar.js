@@ -9,7 +9,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import FolderOpenIcon from '@mui/icons-material/FolderOpen';
-import SettingsIcon from '@mui/icons-material/Settings';
+import HomeIcon from '@mui/icons-material/Home';
 import { ListItemIcon, ListItemText } from '@mui/material';
 
 const Appbar = () => {
@@ -25,9 +25,13 @@ const Appbar = () => {
     setAnchorEl(null);
   };
 
-  const handleNavigate = () => {
+  const handleNavigatePregled = () => {
     handleClose();
     navigate('/pregled-datoteka');
+  };
+    const handleNavigateHome = () => {
+    handleClose();
+    navigate('/home');
   };
 
   const menuItemStyle = {
@@ -78,18 +82,18 @@ const Appbar = () => {
               }
             }}
           >
-            <MenuItem onClick={handleNavigate} sx={menuItemStyle}>
+            <MenuItem onClick={handleNavigatePregled} sx={menuItemStyle}>
             <ListItemIcon>
               <FolderOpenIcon fontSize="small" />
             </ListItemIcon>
-            <ListItemText>Pregled datoteka</ListItemText>
+            <ListItemText>Uploaded files</ListItemText>
           </MenuItem>
 
-          <MenuItem onClick={handleClose} sx={menuItemStyle}>
+          <MenuItem onClick={handleNavigateHome} sx={menuItemStyle}>
             <ListItemIcon>
-              <SettingsIcon fontSize="small" />
+              <HomeIcon fontSize="small" />
             </ListItemIcon>
-            <ListItemText>Moja opcija 2</ListItemText>
+            <ListItemText>Home</ListItemText>
           </MenuItem>
           </Menu>
           <Typography variant="h6" component="div" sx={{

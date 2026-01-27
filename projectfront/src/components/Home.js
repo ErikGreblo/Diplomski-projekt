@@ -13,10 +13,12 @@ import TextField from '@mui/material/TextField';
 import React, {useEffect, useState} from 'react'
 import axios from "axios";
 import 'katex/dist/katex.min.css';
+import { LinearProgress, CircularProgress } from '@mui/material';
+import { List, ListItem, ListItemText, Typography, IconButton} from '@mui/material';
 
-export default function Home({ messages, setMessages }) {
+export default function Home({ messagesO, messagesC, setMessagesO, setMessagesC, selectedModel, setSelectedModel}) {
 	const [selectedFile, setSelectedFile] = useState(null);
-  const [selectedModel, setSelectedModel] = useState("ollama");
+  const [isLoading, setIsLoading] = useState(false);
 
 	const onFileChange = (event) => {
 		setSelectedFile(event.target.files[0]);
@@ -29,15 +31,22 @@ export default function Home({ messages, setMessages }) {
       text
     };
 
-    setMessages(prev => [...prev, userMessage]);
-
+    if (selectedModel == "ollama") {
+      setMessagesO(prev => [...prev, userMessage]);
+    }
+    else {
+      setMessagesC(prev => [...prev, userMessage]);
+    }
+    setIsLoading(true)
     const response = await fetch(`http://localhost:8080/chat?provider=${selectedModel}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ message: text })
     });
 
+
     const data = await response.json();
+    setIsLoading(false)
 
     const assistantMessage = {
       id: Date.now() + 1,
@@ -45,18 +54,18 @@ export default function Home({ messages, setMessages }) {
       text: data.reply
     };
 
-    setMessages(prev => [...prev, assistantMessage]);
+    if (selectedModel == "ollama") {
+      setMessagesO(prev => [...prev, assistantMessage]);
+    }
+    else {
+      setMessagesC(prev => [...prev, assistantMessage]);
+    }
   };
-
-
-  const handleUpload = async () => {
-      // We will fill this out later
-    };
 
 const onFileUpload = async () => {
   if (!selectedFile) return;
 
-  const MAX_SIZE = 10 * 1024 * 1024; // 10MB
+  const MAX_SIZE = 10 * 1024 * 1024;
   if (selectedFile.size > MAX_SIZE) {
     alert("File is too large! Maximum allowed size is 10MB.");
     return;
@@ -65,13 +74,23 @@ const onFileUpload = async () => {
   const formData = new FormData();
   formData.append("file", selectedFile);
 
-  const response = await fetch("http://localhost:8080/chat/upload", {
-    method: "POST",
-    body: formData
-  });
+  try {
+    const response = await fetch("http://localhost:8080/chat/upload", {
+      method: "POST",
+      body: formData
+    });
 
-  const data = await response.json();
-  console.log(data);
+    if (response.ok) {
+      const data = await response.json();
+      console.log("File uploaded:", data);
+      setSelectedFile(null);
+      document.querySelector('.btn-file').value = ""; 
+      
+      alert("File uploaded successfully!");
+    }
+  } catch (error) {
+    console.error("Error:", error);
+  }
 };
 
   return (
@@ -79,7 +98,8 @@ const onFileUpload = async () => {
     <AppBar/>
     <Container className={"all"} maxWidth="lg">
       <Paper className={"chat-box"}>
-        <MessageList messages={messages} />
+        <MessageList messages={selectedModel === "ollama" ? messagesO : messagesC} />
+        {isLoading && <LinearProgress sx={{ backgroundColor: 'rgba(65, 105, 225, 0.2)', '& .MuiLinearProgress-bar': {backgroundColor: 'royalblue'}, marginBottom: '0.2vw'}}/>}
         <MessageInput onSend={sendMessage} />
         <Box className={"box-under"}>
           <input className={"btn-file"} type="file" onChange={onFileChange} />

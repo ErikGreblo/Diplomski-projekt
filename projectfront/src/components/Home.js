@@ -15,6 +15,7 @@ import axios from "axios";
 import 'katex/dist/katex.min.css';
 import { LinearProgress, CircularProgress } from '@mui/material';
 import { List, ListItem, ListItemText, Typography, IconButton} from '@mui/material';
+import 'katex/dist/katex.min.css';
 
 export default function Home({ messagesO, messagesC, setMessagesO, setMessagesC, selectedModel, setSelectedModel}) {
 	const [selectedFile, setSelectedFile] = useState(null);

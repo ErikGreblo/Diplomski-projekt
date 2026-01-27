@@ -1,6 +1,7 @@
 package com.projekt.diplomski_projekt.controller;
 
 import com.projekt.diplomski_projekt.model.FileService;
+import com.projekt.diplomski_projekt.model.StudyMaterial;
 import com.projekt.diplomski_projekt.service.ChatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,6 +14,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Map;
+import java.util.List;
 
 
 @RestController
@@ -71,6 +73,19 @@ public class ChatController {
         Path filePath = uploadPath.resolve(file.getOriginalFilename());
         Files.write(filePath, file.getBytes());
 
+        fileService.saveFileLog(file.getOriginalFilename());
+
         return Map.of("status", "ok", "filename", file.getOriginalFilename());
+    }
+
+    @GetMapping("/files")
+    public List<StudyMaterial> getFiles(){
+        return fileService.getAllFiles();
+    }
+
+    @DeleteMapping("/files/{id}")
+    public Map<String, String> deleteFile(@PathVariable Long id){
+        fileService.deleteFile(id);
+        return Map.of("status", "deleted", "id", String.valueOf(id));
     }
 }

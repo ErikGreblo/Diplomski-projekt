@@ -28,7 +28,7 @@ export default function ChatMessage({ message }) {
           remarkPlugins={[remarkMath]}
           rehypePlugins={[rehypeKatex]}
         >
-          {message.text
+          {(message.text || "") 
             .replace(/\\\[/g, '$$$$')
             .replace(/\\\]/g, '$$$$')
             .replace(/\\\(/g, '$$')

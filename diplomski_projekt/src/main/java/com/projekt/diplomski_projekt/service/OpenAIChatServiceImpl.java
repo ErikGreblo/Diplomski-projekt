@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -22,16 +23,21 @@ public class OpenAIChatServiceImpl implements ChatService{
 
     private final RestTemplate restTemplate = new RestTemplate();
 
+    private List<Map<String, String>> conversationHistory = new ArrayList<>();
+
     @Override
     public String chat(String systemPrompt, String userPrompt, String context) {
 
+        List<Map<String, Object>> messagesToSend = new ArrayList<>();
+
+        messagesToSend.add(Map.of("role", "system", "content", systemPrompt));
+        messagesToSend.add(Map.of("role", "system", "content", "CONTEXT FROM FILES:\n" + context));
+        messagesToSend.addAll((List) conversationHistory);
+        messagesToSend.add(Map.of("role", "user", "content", userPrompt));
+
         Map<String, Object> request = Map.of(
                 "model", model,
-                "messages", List.of(
-                        Map.of("role", "system", "content", systemPrompt),
-                        Map.of("role", "system", "content", "Context:\n" + context),
-                        Map.of("role", "user", "content", userPrompt)
-                )
+                "messages", messagesToSend
         );
 
         HttpHeaders headers = new HttpHeaders();
@@ -54,6 +60,16 @@ public class OpenAIChatServiceImpl implements ChatService{
         Map message = (Map) firstChoice.get("message");
 
 
-        return message.get("content").toString();
+        String replyContent = message.get("content").toString();
+
+        conversationHistory.add(Map.of("role", "user", "content", userPrompt));
+        conversationHistory.add(Map.of("role", "assistant", "content", replyContent));
+
+        return replyContent;
+    }
+
+    @Override
+    public void clearHistory() {
+        conversationHistory.clear();
     }
 }

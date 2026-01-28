@@ -12,10 +12,13 @@ public class OllamaChatServiceImpl implements ChatService{
 
     private final RestTemplate restTemplate = new RestTemplate();
 
+    private StringBuilder history = new StringBuilder();
+
     @Override
     public String chat(String systemPrompt, String userPrompt, String context) {
         String fullPrompt = systemPrompt
                 + "\n\nContext from uploaded files:\n" + context
+                + "\n\nConversation history:" + history.toString()
                 + "\n\nUser: " + userPrompt;
 
         Map<String, Object> request = Map.of(
@@ -30,6 +33,14 @@ public class OllamaChatServiceImpl implements ChatService{
                 Map.class
         );
 
-        return response.getBody().get("response").toString();
+        String reply = response.getBody().get("response").toString();
+        history.append("User: ").append(userPrompt).append("\n");
+        history.append("AI: ").append(reply).append("\n");
+
+        return reply;
+    }
+    @Override
+    public void clearHistory(){
+        history.setLength(0);
     }
 }

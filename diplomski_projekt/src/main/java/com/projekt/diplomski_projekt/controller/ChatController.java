@@ -62,6 +62,16 @@ public class ChatController {
         return Map.of("reply", reply);
     }
 
+    @PostMapping("/clear")
+    public Map<String, String> clearHistory(@RequestParam(defaultValue = "ollama") String provider) {
+        ChatService service = chatServices.get(provider);
+        if (service != null) {
+            service.clearHistory();
+            return Map.of("status", "cleared", "provider", provider);
+        }
+        return Map.of("status", "error", "message", "Provider not found");
+    }
+
     @PostMapping("/upload")
     public Map<String, String> upload(@RequestParam("file") MultipartFile file) throws Exception {
 
